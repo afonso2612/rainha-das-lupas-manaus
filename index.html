@@ -1,77 +1,344 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rainha das Lupas | O Império do Estilo</title>
-    <!-- Importando ícones e fontes -->
-    <link rel="stylesheet" href="https://cloudflare.com">
+    <title>Rainha das Lupas | Catálogo Oficial</title>
     <style>
-        /* CSS - AQUI FICA A BELEZA DO SITE */
-        body { font-family: 'Arial', sans-serif; margin: 0; background-color: #f9f9f9; color: #333; text-align: center; }
-        
-        header { background-color: #fff; padding: 20px; border-bottom: 3px solid #0056b3; } /* Azul da logo */
-        .logo { max-width: 250px; }
-        
-        .hero { padding: 50px 20px; background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('sua-foto-de-fundo.jpg'); color: white; }
-        
-        .btn-whatsapp { 
-            background-color: #25d366; color: white; padding: 15px 30px; 
-            text-decoration: none; border-radius: 50px; font-weight: bold; display: inline-block; margin-top: 20px;
+        :root {
+            --gold: #d4af37;
+            --dark: #050505;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
         }
 
-        .galeria { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; padding: 40px; }
-        .card { background: white; padding: 10px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-        .card img { width: 100%; border-radius: 8px; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
 
-        .pix-box { background: #e3f2fd; padding: 30px; margin: 20px; border-radius: 15px; border: 2px dashed #0056b3; }
-        
-        footer { background: #222; color: white; padding: 20px; margin-top: 40px; }
-        .social-icons a { color: white; font-size: 30px; margin: 0 15px; text-decoration: none; }
+        body {
+            background-color: var(--dark);
+            color: #fff;
+            background-image: radial-gradient(circle at 50% -20%, #1a1a1a, #050505);
+        }
+
+        header {
+            height: 40vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('radar_capa.jpg') center/cover no-repeat;
+        }
+
+        .logo-top {
+            width: 100px;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--gold);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 15px;
+            transition: 0.3s;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .card:hover {
+            border-color: var(--gold);
+            transform: translateY(-8px);
+        }
+
+        .img-box {
+            width: 100%;
+            height: 260px;
+            overflow: hidden;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+
+        .img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .nome {
+            font-weight: 800;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .preco {
+            color: var(--gold);
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            inset: 0;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(10px);
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .modal-content {
+            max-width: 700px;
+            margin: 30px auto;
+            background: #0a0a0a;
+            border: 1px solid var(--border);
+            padding: 25px;
+            border-radius: 25px;
+            position: relative;
+            text-align: center;
+        }
+
+        .fechar {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2.5rem;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: 130px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 1px solid #333;
+        }
+
+        .pix-box {
+            background: #111;
+            padding: 20px;
+            border-radius: 20px;
+            margin: 20px 0;
+            border: 1px dashed var(--gold);
+            display: none;
+        }
+
+        .qrcode-img {
+            width: 180px;
+            height: 180px;
+            border-radius: 10px;
+            margin: 15px auto;
+            display: block;
+            border: 5px solid white;
+            background: white;
+            object-fit: contain;
+        }
+
+        .btn {
+            padding: 16px;
+            border-radius: 50px;
+            text-transform: uppercase;
+            font-weight: 800;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            margin: 10px 0;
+            transition: 0.3s;
+            border: none;
+        }
+
+        .btn-pix {
+            background: var(--gold);
+            color: #000;
+        }
+
+        .btn-zap {
+            background: #25d366;
+            color: #fff;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
+        }
+
+        .qr-footer {
+            width: 130px;
+            border-radius: 15px;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
 
-    <header>
-        <!-- Aqui você vai colocar o arquivo da logo que você me mostrou -->
-        <img src="logo-rainha.jpg" alt="Rainha das Lupas" class="logo">
-    </header>
+<header>
+    <div class="hero">
+        <img src="logo.jpg" class="logo-top" alt="Logo">
+        <h1>O Império do Estilo</h1>
+    </div>
+</header>
 
-    <section class="hero">
-        <h1>O Império do Estilo no Seu Rosto</h1>
-        <p>As lupas mais exclusivas de Manaus e região.</p>
-        <a href="https://wa.me." class="btn-whatsapp">
-            <i class="fab fa-whatsapp"></i> CHAMAR NO WHATSAPP
-        </a>
-    </section>
-
-    <h2>Nossas Amostras</h2>
-    <div class="galeria">
-        <!-- Repita esse bloco para cada foto de óculos -->
-        <div class="card">
-            <img src="foto-oculos1.jpg" alt="Lupa Modelo X">
-            <p>Modelo Sport Elite</p>
+<div class="container">
+    <div class="grid">
+        <div class="card" onclick="abrir('juliet', 'Oakley Juliet', '46,00')">
+            <div class="img-box"><img src="juliet.jpg" alt="Oakley Juliet"></div>
+            <div class="nome">Oakley Juliet</div>
+            <div class="preco">R$ 46,00</div>
         </div>
-        <div class="card">
-            <img src="foto-oculos2.jpg" alt="Lupa Modelo Y">
-            <p>Modelo Black Mirror</p>
+
+        <div class="card" onclick="abrir('radar_ev', 'Oakley Radar EV', '70,00')">
+            <div class="img-box"><img src="radar_EV1.jpg" alt="Oakley Radar EV"></div>
+            <div class="nome">Oakley Radar EV</div>
+            <div class="preco">R$ 70,00</div>
+        </div>
+
+        <div class="card" onclick="abrir('flak', 'Oakley Flak Jacket', '55,00')">
+            <div class="img-box"><img src="flak.jpg" alt="Oakley Flak Jacket"></div>
+            <div class="nome">Oakley Flak Jacket</div>
+            <div class="preco">R$ 55,00</div>
+        </div>
+
+        <div class="card" onclick="abrir('pivete', 'Oakley Pivete', '40,00')">
+            <div class="img-box"><img src="pivete_capa.jpg" alt="Oakley Pivete"></div>
+            <div class="nome">Oakley Pivete</div>
+            <div class="preco">R$ 40,00</div>
+        </div>
+
+        <div class="card" onclick="abrir('miumiu', 'Luxury MiuMiu', '70,00')">
+            <div class="img-box"><img src="oculos de sol MiuMiu.jpg" alt="MiuMiu Luxury"></div>
+            <div class="nome">MiuMiu Luxury</div>
+            <div class="preco">R$ 70,00</div>
+        </div>
+
+        <div class="card" onclick="abrir('ryban', 'Ray-Ban Collection', '80,00')">
+            <div class="img-box"><img src="ry ban.jpg" alt="Ray-Ban Collection"></div>
+            <div class="nome">Ray-Ban</div>
+            <div class="preco">R$ 80,00</div>
         </div>
     </div>
+</div>
 
-    <div class="pix-box">
-        <h3><i class="fas fa-qrcode"></i> Pagamento Facilitado</h3>
-        <p>Aceitamos <strong>PIX</strong> com aprovação imediata!</p>
-        <p>Chave: (Insira aqui a chave da cliente)</p>
-    </div>
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <span class="fechar" onclick="fechar()">&times;</span>
+        <h2 id="mNome" style="color: var(--gold); margin-bottom: 10px;"></h2>
+        <p id="mPreco" style="margin-bottom: 10px;"></p>
+        <div id="mGrid" class="gallery"></div>
 
-    <footer>
-        <p>Siga a Rainha nas redes sociais:</p>
-        <div class="social-icons">
-            <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
-            <a href="https://wa.me"><i class="fab fa-whatsapp"></i></a>
+        <button class="btn btn-pix" onclick="togglePix()">💰 PAGAR VIA PIX (QR CODE)</button>
+
+        <div id="pixArea" class="pix-box">
+            <img id="pixQr" src="" class="qrcode-img" alt="QR Code Pix">
+            <p style="font-size: 0.8rem; margin: 10px 0;">Chave: 03922067220</p>
+            <button onclick="copiarPix()" style="background: #333; color: #fff; border: none; padding: 8px 20px; border-radius: 5px; cursor: pointer;">
+                Copiar Chave
+            </button>
         </div>
-        <p>&copy; 2024 Rainha das Lupas - Desenvolvido por [Seu Nome]</p>
-    </footer>
 
+        <a id="mZap" href="#" class="btn btn-zap" target="_blank">FINALIZAR NO WHATSAPP</a>
+    </div>
+</div>
+
+<footer>
+    <img src="insta.jpg" class="qr-footer" alt="Instagram">
+    <p style="font-weight: 700; color: var(--gold);">@RAINHADASLUPAS.AM</p>
+</footer>
+
+<script>
+    const CHAVE_PIX = "03922067220";
+    const WHATSAPP = "5592985573144";
+
+    const database = {
+        juliet: ['juliet1.jpg', 'juliet2.jpg', 'juliet3.jpg', 'juliet4.jpg', 'juliet5.jpg'],
+        radar_ev: ['radar_EV1.jpg', 'radar_EV2.jpg', 'radar_EV3.jpg', 'radar_EV5.jpg', 'radar_EV6.jpg', 'radar_EV7.jpg', 'radar_EV8.jpg', 'radar_EV9.jpg'],
+        flak: ['flak1.jpg', 'flak2.jpg', 'flak3.jpg', 'flak4.jpg', 'flak5.jpg'],
+        pivete: ['pivete_capa.jpg', 'pivete_1.jpg', 'pivete_2.jpg'],
+        miumiu: ['oculos de sol MiuMiu.jpg', 'oculos de sol MiuMiu1.jpg'],
+        ryban: ['ry ban.jpg', 'ry ban1.jpg', 'ry ban2.jpg', 'ry ban3.jpg']
+    };
+
+    function abrir(id, nome, preco) {
+        document.getElementById('mNome').innerText = nome;
+        document.getElementById('mPreco').innerText = 'R$ ' + preco;
+
+        const grid = document.getElementById('mGrid');
+        grid.innerHTML = "";
+
+        if (database[id]) {
+            database[id].forEach(imgSrc => {
+                let img = document.createElement('img');
+                img.src = imgSrc;
+                img.alt = nome;
+                grid.appendChild(img);
+            });
+        }
+
+        const msg = encodeURIComponent("Olá! Quero a " + nome + " que vi no catálogo.");
+        document.getElementById('mZap').href = "https://wa.me/" + WHATSAPP + "?text=" + msg;
+
+        document.getElementById('pixQr').src =
+            "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" +
+            encodeURIComponent("PIX: " + CHAVE_PIX + " | Produto: " + nome + " | Valor: R$ " + preco);
+
+        document.getElementById('modal').style.display = "block";
+    }
+
+    function togglePix() {
+        const area = document.getElementById('pixArea');
+        area.style.display = area.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function copiarPix() {
+        const temp = document.createElement('textarea');
+        temp.value = CHAVE_PIX;
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand('copy');
+        document.body.removeChild(temp);
+        alert("Chave Pix copiada!");
+    }
+
+    function fechar() {
+        document.getElementById('modal').style.display = "none";
+        document.getElementById('pixArea').style.display = "none";
+    }
+
+    window.onclick = (e) => {
+        if (e.target.className == 'modal') fechar();
+    }
+</script>
 </body>
 </html>
